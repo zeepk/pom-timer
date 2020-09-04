@@ -1,12 +1,11 @@
-import React from 'react'
-import Dashboard from './Dashboard'
-
+import React from 'react';
+import Dashboard from './Dashboard';
 const App = () => {
 	return (
 		<div className="app">
 			<Dashboard />
 		</div>
-	)
-}
+	);
+};
 
-export default App
+export default App;

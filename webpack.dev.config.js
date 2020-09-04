@@ -1,7 +1,7 @@
-const webpack = require('webpack')
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { spawn } = require('child_process')
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { spawn } = require('child_process');
 
 module.exports = {
 	module: {
@@ -28,7 +28,7 @@ module.exports = {
 	},
 	target: 'electron-renderer',
 	plugins: [
-		new HtmlWebpackPlugin({ title: 'React Electron App' }),
+		new HtmlWebpackPlugin({ title: 'Pom Timer' }),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('development'),
 		}),
@@ -48,7 +48,7 @@ module.exports = {
 				stdio: 'inherit',
 			})
 				.on('close', (code) => process.exit(0))
-				.on('error', (spawnError) => console.error(spawnError))
+				.on('error', (spawnError) => console.error(spawnError));
 		},
 	},
-}
+};

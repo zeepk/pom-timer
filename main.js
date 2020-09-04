@@ -1,16 +1,17 @@
-const path = require('path')
-const url = require('url')
-const { app, BrowserWindow } = require('electron')
+const path = require('path');
+const url = require('url');
+const { app, BrowserWindow } = require('electron');
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+let mainWindow;
 
-let mainWindow
-
-let isDev = false
+let isDev = false;
 
 if (
 	process.env.NODE_ENV !== undefined &&
 	process.env.NODE_ENV === 'development'
 ) {
-	isDev = true
+	isDev = true;
 }
 
 function createMainWindow() {
@@ -23,9 +24,9 @@ function createMainWindow() {
 			nodeIntegration: true,
 		},
 		backgroundColor: '#24292e',
-	})
+	});
 
-	let indexPath
+	let indexPath;
 
 	if (isDev && process.argv.indexOf('--noDevServer') === -1) {
 		indexPath = url.format({
@@ -33,51 +34,51 @@ function createMainWindow() {
 			host: 'localhost:8080',
 			pathname: 'index.html',
 			slashes: true,
-		})
+		});
 	} else {
 		indexPath = url.format({
 			protocol: 'file:',
 			pathname: path.join(__dirname, 'dist', 'index.html'),
 			slashes: true,
-		})
+		});
 	}
 
-	mainWindow.loadURL(indexPath)
+	mainWindow.loadURL(indexPath);
 
 	// Don't show until we are ready and loaded
 	mainWindow.once('ready-to-show', () => {
-		mainWindow.show()
+		mainWindow.show();
 
 		// Open devtools if dev
 		if (isDev) {
 			const {
 				default: installExtension,
 				REACT_DEVELOPER_TOOLS,
-			} = require('electron-devtools-installer')
+			} = require('electron-devtools-installer');
 
 			installExtension(REACT_DEVELOPER_TOOLS).catch((err) =>
 				console.log('Error loading React DevTools: ', err)
-			)
-			mainWindow.webContents.openDevTools()
+			);
+			mainWindow.webContents.openDevTools();
 		}
-	})
+	});
 
-	mainWindow.on('closed', () => (mainWindow = null))
+	mainWindow.on('closed', () => (mainWindow = null));
 }
 
-app.on('ready', createMainWindow)
+app.on('ready', createMainWindow);
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
-		app.quit()
+		app.quit();
 	}
-})
+});
 
 app.on('activate', () => {
 	if (mainWindow === null) {
-		createMainWindow()
+		createMainWindow();
 	}
-})
+});
 
 // Stop error
-app.allowRendererProcessReuse = true
+app.allowRendererProcessReuse = true;
